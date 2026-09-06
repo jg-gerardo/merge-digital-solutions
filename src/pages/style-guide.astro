@@ -1,0 +1,327 @@
+---
+import Button from "../components/ui/Button.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const colors = [
+  { name: "Ink", token: "--color-ink", value: "#20232e" },
+  { name: "Muted", token: "--color-neutral-muted", value: "#7b7d84" },
+  { name: "Soft", token: "--color-neutral-soft", value: "#eeeeee" },
+  { name: "Cool", token: "--color-neutral-cool", value: "#dedede" },
+  { name: "White", token: "--color-surface", value: "#ffffff" },
+  { name: "Blue", token: "--color-brand-blue", value: "#0868b2" },
+  { name: "Pink", token: "--color-brand-pink", value: "#ff3b82" },
+  { name: "Orange", token: "--color-brand-orange", value: "#ff7900" },
+  { name: "Teal", token: "--color-brand-teal", value: "#00ad98" },
+  { name: "Purple", token: "--color-brand-purple", value: "#9700b8" },
+];
+
+const tones = ["ink", "blue", "pink", "orange", "teal", "purple"] as const;
+---
+
+<BaseLayout
+  title="UI Foundations | Merge Digital Solutions"
+  description="Typography, color, controls, and reusable interface foundations for Merge Digital Solutions."
+>
+  <header class="guide-header">
+    <div class="site-container guide-header__inner">
+      <a class="brand" href="/" aria-label="Merge Digital Solutions home">
+        <img src="/merge-logo-main.png" alt="" width="2172" height="724" />
+      </a>
+      <Button href="/" variant="tertiary">Back home</Button>
+    </div>
+  </header>
+
+  <main class="site-container guide">
+    <section class="guide-intro">
+      <p class="type-label eyebrow">Design system starter</p>
+      <h1 class="type-heading-1">UI foundations</h1>
+      <p class="type-body-lg guide-intro__copy">
+        A working reference for the brand's typography, palette, controls, and
+        surface language. Use named tokens and components instead of copying raw
+        values from this page.
+      </p>
+    </section>
+
+    <section class="guide-section" aria-labelledby="typography-title">
+      <div class="section-heading">
+        <p class="type-label eyebrow">01 / Typography</p>
+        <h2 id="typography-title" class="type-heading-2">Plus Jakarta Sans</h2>
+      </div>
+      <div class="type-samples">
+        <div>
+          <span class="sample-name">Display / Extra bold</span>
+          <p class="type-display">Merge</p>
+        </div>
+        <div>
+          <span class="sample-name">Heading 1 / Extra bold</span>
+          <p class="type-heading-1">Purposeful color.</p>
+        </div>
+        <div>
+          <span class="sample-name">Heading 2 / Bold</span>
+          <p class="type-heading-2">Built for clarity.</p>
+        </div>
+        <div>
+          <span class="sample-name">Heading 3 / Bold</span>
+          <p class="type-heading-3">Organized digital experiences</p>
+        </div>
+        <div class="body-sample">
+          <span class="sample-name">Body large / Regular</span>
+          <p class="type-body-lg">
+            We use a calm visual structure, then add energy through focused
+            moments of brand color and abstract imagery.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="guide-section" aria-labelledby="colors-title">
+      <div class="section-heading">
+        <p class="type-label eyebrow">02 / Color</p>
+        <h2 id="colors-title" class="type-heading-2">Core palette</h2>
+      </div>
+      <div class="color-grid">
+        {
+          colors.map((color) => (
+            <article class="color-card">
+              <div
+                class="color-card__swatch"
+                style={`--swatch: var(${color.token})`}
+              />
+              <div class="color-card__meta">
+                <strong>{color.name}</strong>
+                <code>{color.value}</code>
+                <code>var({color.token})</code>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="guide-section" aria-labelledby="buttons-title">
+      <div class="section-heading">
+        <p class="type-label eyebrow">03 / Actions</p>
+        <h2 id="buttons-title" class="type-heading-2">Button hierarchy</h2>
+        <p class="type-body section-note">
+          Primary for the main action, secondary for support, tertiary for
+          exploration, and icon-only when context already explains the action.
+        </p>
+      </div>
+      <div class="button-table">
+        {
+          tones.map((tone) => (
+            <div class="button-row">
+              <span class="tone-name">{tone}</span>
+              <Button tone={tone}>Primary</Button>
+              <Button tone={tone} variant="secondary">
+                Secondary
+              </Button>
+              <Button tone={tone} variant="tertiary">
+                Tertiary
+              </Button>
+              <Button
+                tone={tone}
+                variant="icon"
+                ariaLabel={`${tone} icon action`}
+              />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="guide-section" aria-labelledby="forms-title">
+      <div class="section-heading">
+        <p class="type-label eyebrow">04 / Forms</p>
+        <h2 id="forms-title" class="type-heading-2">Input fields</h2>
+      </div>
+      <div class="form-samples">
+        <label class="field">
+          <span class="field-label">Name</span>
+          <input class="text-input" type="text" placeholder="Your name" />
+        </label>
+        <label class="field">
+          <span class="field-label">Email</span>
+          <input class="text-input" type="email" value="hello@example.com" />
+        </label>
+        <label class="field">
+          <span class="field-label">Search</span>
+          <input
+            class="text-input"
+            type="search"
+            placeholder="Search projects"
+          />
+        </label>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .guide-header {
+    border-bottom: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-page) 88%, transparent);
+  }
+
+  .guide-header__inner {
+    display: flex;
+    min-height: 6rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .brand {
+    width: clamp(8rem, 18vw, 11rem);
+  }
+
+  .guide {
+    padding-bottom: var(--section-space);
+  }
+
+  .guide-intro,
+  .guide-section {
+    padding-block: var(--section-space);
+  }
+
+  .guide-intro {
+    max-width: 52rem;
+  }
+
+  .eyebrow,
+  .sample-name {
+    color: var(--color-brand-blue-strong);
+  }
+
+  .eyebrow {
+    margin: 0 0 1rem;
+  }
+
+  .guide-intro__copy,
+  .section-note {
+    color: var(--color-text-muted);
+  }
+
+  .guide-intro__copy {
+    max-width: 44rem;
+    margin: 1.5rem 0 0;
+  }
+
+  .guide-section {
+    display: grid;
+    gap: 3rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .section-heading {
+    max-width: 32rem;
+  }
+
+  .section-note {
+    margin: 1rem 0 0;
+  }
+
+  .type-samples {
+    display: grid;
+    gap: 2.75rem;
+  }
+
+  .sample-name {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .body-sample {
+    max-width: 44rem;
+  }
+
+  .body-sample p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 1rem;
+  }
+
+  .color-card {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+  }
+
+  .color-card__swatch {
+    min-height: 8rem;
+    background: var(--swatch);
+  }
+
+  .color-card__meta {
+    display: grid;
+    gap: 0.2rem;
+    padding: 1rem;
+  }
+
+  .color-card code {
+    overflow-wrap: anywhere;
+    color: var(--color-text-muted);
+    font-size: 0.72rem;
+  }
+
+  .button-table {
+    display: grid;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+  }
+
+  .button-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: start;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .button-row + .button-row {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .tone-name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+
+  .form-samples {
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    border-radius: var(--radius-card);
+    background: var(--color-neutral-soft);
+  }
+
+  @media (min-width: 44rem) {
+    .button-row {
+      grid-template-columns: 5rem repeat(4, minmax(0, auto));
+      justify-content: start;
+      gap: 1.25rem;
+    }
+
+    .form-samples {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .guide-section {
+      grid-template-columns: minmax(16rem, 0.7fr) minmax(0, 1.3fr);
+    }
+  }
+</style>
