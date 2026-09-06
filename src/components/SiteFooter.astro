@@ -1,0 +1,281 @@
+---
+const footerGroups = [
+  {
+    title: "Company",
+    links: [
+      ["About Us", "/about"],
+      ["Our Team", "/about#team"],
+      ["Career", "/careers"],
+      ["Contact", "/contact"],
+    ],
+  },
+  {
+    title: "Services",
+    links: [
+      ["Strategy", "/services#strategy"],
+      ["Design", "/services#design"],
+      ["Development", "/services#development"],
+      ["Branding", "/services#branding"],
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      ["Blog", "/blog"],
+      ["Case Studies", "/works"],
+      ["Guides", "/guides"],
+      ["FAQs", "/faqs"],
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      ["Privacy Policy", "/privacy"],
+      ["Terms of Services", "/terms"],
+      ["Cookies Policy", "/cookies"],
+    ],
+  },
+] as const;
+
+const socialLinks = [
+  ["in", "LinkedIn"],
+  ["ig", "Instagram"],
+  ["f", "Facebook"],
+  ["x", "X"],
+] as const;
+---
+
+<footer class="site-footer" data-site-footer>
+  <div class="site-container site-footer__grid" data-section-reveal>
+    <div class="site-footer__brand-column">
+      <a class="site-footer__brand" href="/" aria-label="Merge home">MERGE</a>
+      <p>Experience the Power of Collaboration and Excellence!</p>
+      <div class="site-footer__socials" aria-label="Social media">
+        {
+          socialLinks.map(([shortLabel, label]) => (
+            <a href="#" aria-label={label}>
+              {shortLabel}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    {
+      footerGroups.map(({ title, links }) => (
+        <nav class="site-footer__group" aria-label={`${title} links`}>
+          <h2>{title}</h2>
+          <ul>
+            {links.map(([label, href]) => (
+              <li>
+                <a href={href}>{label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))
+    }
+
+    <div class="site-footer__newsletter">
+      <h2>Stay updated</h2>
+      <p>Subscribe to our newsletter for insights and updates.</p>
+      <form action="/newsletter" method="post">
+        <label class="sr-only" for="footer-email">Enter your email</label>
+        <input
+          id="footer-email"
+          name="email"
+          type="email"
+          placeholder="Enter your email"
+          autocomplete="email"
+          required
+        />
+        <button type="submit" aria-label="Subscribe to newsletter">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+            <path
+              d="m6 3 5 5-5 5"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.75"></path>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    z-index: 1;
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+    color: #111318;
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: 1.35fr repeat(4, minmax(7rem, 0.8fr)) 1.35fr;
+    gap: clamp(1.5rem, 3.5vw, 3.25rem);
+    align-items: start;
+  }
+
+  .site-footer__brand {
+    display: inline-block;
+    color: #111318;
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-decoration: none;
+  }
+
+  .site-footer__brand-column > p,
+  .site-footer__newsletter > p {
+    margin: 1.25rem 0 0;
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .site-footer__brand-column > p {
+    max-width: 12rem;
+  }
+
+  .site-footer__socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+
+  .site-footer__socials a {
+    display: grid;
+    width: 2rem;
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--color-border) 85%, transparent);
+    border-radius: 0.5rem;
+    color: #111318;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease;
+  }
+
+  .site-footer__socials a:hover {
+    border-color: var(--color-text-muted);
+    background: rgb(255 255 255 / 45%);
+  }
+
+  .site-footer h2 {
+    margin: 0;
+    color: #111318;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .site-footer ul {
+    display: grid;
+    gap: 0.8rem;
+    margin: 1.35rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer__group a {
+    color: #111318;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    text-decoration: none;
+  }
+
+  .site-footer__group a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
+  }
+
+  .site-footer__newsletter > p {
+    max-width: 13rem;
+  }
+
+  .site-footer form {
+    position: relative;
+    margin-top: 1.1rem;
+  }
+
+  .site-footer input {
+    width: 100%;
+    min-height: 2.5rem;
+    padding: 0.65rem 2.75rem 0.65rem 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    outline: none;
+    background: rgb(255 255 255 / 42%);
+    color: #111318;
+    font-size: 0.675rem;
+  }
+
+  .site-footer input:focus {
+    border-color: var(--color-focus);
+    box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--color-focus) 16%, transparent);
+  }
+
+  .site-footer button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: #111318;
+    cursor: pointer;
+  }
+
+  .site-footer button svg {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  @media (max-width: 64rem) {
+    .site-footer__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      row-gap: 3rem;
+    }
+
+    .site-footer__brand-column {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 42rem) {
+    .site-footer__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .site-footer__newsletter {
+      grid-column: 1 / -1;
+      max-width: 22rem;
+    }
+  }
+
+  @media (max-width: 28rem) {
+    .site-footer__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .site-footer__brand-column,
+    .site-footer__newsletter {
+      grid-column: auto;
+    }
+  }
+</style>

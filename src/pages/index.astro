@@ -1,7 +1,9 @@
 ---
+import ContactCtaSection from "../components/sections/ContactCtaSection.astro";
 import HeroSection from "../components/sections/HeroSection.astro";
-import ProcessSection from "../components/sections/ProcessSection.astro";
+import FeaturedWorksSection from "../components/sections/FeaturedWorksSection.astro";
 import ServicesSection from "../components/sections/ServicesSection.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
@@ -12,9 +14,35 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 >
   <SiteHeader />
 
-  <main>
+  <main class="section-stack">
     <HeroSection />
     <ServicesSection />
-    <ProcessSection />
+    <div class="closing-sections">
+      <FeaturedWorksSection />
+      <ContactCtaSection />
+      <SiteFooter />
+    </div>
   </main>
 </BaseLayout>
+
+<style>
+  :global(.section-stack > section:not(:first-of-type)),
+  .closing-sections {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .closing-sections {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .closing-sections::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: url("/assets/images/abstract-bg.png") center / cover no-repeat;
+    content: "";
+    transform: scaleX(-1);
+  }
+</style>

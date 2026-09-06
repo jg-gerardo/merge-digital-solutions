@@ -48,9 +48,12 @@ test("shows the first section artwork", async ({ page }) => {
   ).toHaveAttribute("href", "/style-guide#colors-title");
 });
 
-test("shows the services and process sections", async ({ page }) => {
+test("shows the services, featured works, and contact sections", async ({
+  page,
+}) => {
   await page.goto("/");
 
+  await expect(page.locator("#services")).toHaveCSS("border-top-width", "1px");
   await expect(
     page.getByRole("heading", {
       level: 2,
@@ -58,17 +61,52 @@ test("shows the services and process sections", async ({ page }) => {
     }),
   ).toBeVisible();
   await expect(page.locator("[data-service-card]")).toHaveCount(4);
-  await expect(
-    page.getByRole("link", { name: "View all services" }),
-  ).toHaveAttribute("href", "/services");
+  const servicesLink = page.getByRole("link", {
+    name: "VIEW ALL SERVICES",
+    exact: true,
+  });
+  await expect(servicesLink).toHaveAttribute("href", "/services");
+  await expect(servicesLink.locator("svg")).toBeVisible();
 
+  await expect(
+    page.getByRole("heading", { level: 2, name: "Featured works" }),
+  ).toBeVisible();
+  const worksLink = page.getByRole("link", {
+    name: "VIEW ALL WORKS",
+    exact: true,
+  });
+  await expect(worksLink).toHaveAttribute("href", "/works");
+  await expect(worksLink.locator("svg")).toBeVisible();
+  await expect(page.locator("[data-featured-work]")).toHaveCount(3);
+  await expect(
+    page.locator("[data-featured-work] img").first(),
+  ).toHaveAttribute("src", "/assets/images/card-design-4.png");
+  await expect(page.locator(".closing-sections")).toHaveCSS(
+    "border-top-width",
+    "1px",
+  );
   await expect(
     page.getByRole("heading", {
       level: 2,
-      name: /We build smooth, fast, and user-friendly websites and apps/,
+      name: "Let’s build something amazing together.",
     }),
   ).toBeVisible();
-  await expect(page.locator("[data-process-step]")).toHaveCount(4);
+  await expect(page.locator("[data-contact-cta]")).toHaveCSS(
+    "background-image",
+    /card-design-5\.png/,
+  );
+  await expect(page.getByRole("link", { name: "Contact Us" })).toHaveAttribute(
+    "href",
+    "/contact",
+  );
+  await expect(page.locator("[data-site-footer]")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { level: 2, name: "Stay updated" }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Enter your email")).toHaveAttribute(
+    "type",
+    "email",
+  );
 });
 
 test("reveals the hero foreground as it enters the viewport", async ({
@@ -242,10 +280,9 @@ test("shows the primary navigation", async ({ page }) => {
   await expect(
     navigation.getByRole("link", { name: "Contact" }),
   ).toHaveAttribute("href", "/contact");
-  await expect(page.getByRole("link", { name: "Let's Talk" })).toHaveAttribute(
-    "href",
-    "/contact",
-  );
+  const contactLink = page.getByRole("link", { name: "Let's Talk" });
+  await expect(contactLink).toHaveAttribute("href", "/contact");
+  await expect(contactLink).toHaveAttribute("data-variant", "secondary");
 });
 
 test("opens and closes the navigation on a narrow screen", async ({ page }) => {
@@ -256,13 +293,30 @@ test("opens and closes the navigation on a narrow screen", async ({ page }) => {
   await toggle.click();
 
   await expect(toggle).toHaveAttribute("aria-expanded", "true");
+  const navigation = page.getByRole("navigation", {
+    name: "Primary navigation",
+  });
+  await expect(navigation).toBeVisible();
+  await expect(navigation).toHaveCSS("position", "fixed");
+  await expect
+    .poll(async () => (await navigation.boundingBox())?.x)
+    .toBeCloseTo(0, 0);
+
+  const sheetBounds = await navigation.boundingBox();
+  expect(sheetBounds).not.toBeNull();
+  expect(sheetBounds?.x).toBeCloseTo(0, 0);
+  expect(sheetBounds?.width).toBeCloseTo(292.5, 0);
+
   await expect(
-    page.getByRole("navigation", { name: "Primary navigation" }),
+    navigation.getByRole("link", { name: "Merge Digital Solutions home" }),
   ).toBeVisible();
+  const sheetContactLink = navigation.getByRole("link", {
+    name: "Let's Talk",
+  });
+  await expect(sheetContactLink).toBeVisible();
+  await expect(sheetContactLink).toHaveAttribute("data-variant", "secondary");
 
   await page.keyboard.press("Escape");
   await expect(toggle).toHaveAttribute("aria-expanded", "false");
-  await expect(
-    page.getByRole("navigation", { name: "Primary navigation" }),
-  ).toBeHidden();
+  await expect(navigation).toBeHidden();
 });
