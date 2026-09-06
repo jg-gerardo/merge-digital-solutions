@@ -1,5 +1,5 @@
 ---
-import Button from "../components/ui/Button.astro";
+import SiteHeader from "../components/SiteHeader.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
@@ -9,14 +9,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 >
   <a class="skip-link" href="#not-found-content">Skip to content</a>
 
-  <header class="guide-header">
-    <div class="site-container guide-header__inner">
-      <a class="brand" href="/" aria-label="Merge Digital Solutions home">
-        <img src="/merge-logo-main.png" alt="" width="176" height="59" />
-      </a>
-      <Button href="/" variant="tertiary">Back home</Button>
-    </div>
-  </header>
+  <SiteHeader ctaHref="/" ctaLabel="Back to Home" overlay={false} />
 
   <main id="not-found-content" class="not-found-page">
     <h1 class="sr-only">Page not found</h1>
@@ -34,7 +27,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     position: fixed;
     top: 1rem;
     left: 1rem;
-    z-index: 2;
+    z-index: 30;
     padding: 0.65rem 1rem;
     border-radius: var(--radius-control);
     background: var(--color-ink);
@@ -46,28 +39,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
   .skip-link:focus {
     transform: translateY(0);
-  }
-
-  .guide-header {
-    border-bottom: 1px solid var(--color-border);
-    background: color-mix(in srgb, var(--color-page) 88%, transparent);
-  }
-
-  .guide-header__inner {
-    display: flex;
-    min-height: 6rem;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .brand {
-    width: clamp(8rem, 18vw, 11rem);
-  }
-
-  .brand img {
-    width: 100%;
-    height: auto;
   }
 
   .not-found-page {

@@ -1,6 +1,12 @@
 ---
 import Button from "./ui/Button.astro";
 
+interface Props {
+  ctaHref?: string;
+  ctaLabel?: string;
+  overlay?: boolean;
+}
+
 const navigation = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
@@ -10,9 +16,17 @@ const navigation = [
 ];
 
 const currentPath = Astro.url.pathname;
+const {
+  ctaHref = "/contact",
+  ctaLabel = "Let's Talk",
+  overlay = true,
+} = Astro.props;
 ---
 
-<header class="site-header" data-site-header>
+<header
+  class:list={["site-header", { "site-header--flow": !overlay }]}
+  data-site-header
+>
   <div class="site-container site-header__inner">
     <a
       class="site-header__brand"
@@ -47,12 +61,11 @@ const currentPath = Astro.url.pathname;
           ))
         }
       </div>
-
     </nav>
 
     <div class="site-header__actions">
-      <Button class="site-header__cta" href="/contact" variant="secondary">
-        Let&apos;s Talk
+      <Button class="site-header__cta" href={ctaHref} variant="secondary">
+        {ctaLabel}
       </Button>
       <button
         class="site-header__toggle"
@@ -138,6 +151,12 @@ const currentPath = Astro.url.pathname;
     left: 0;
     z-index: 20;
     background: transparent;
+  }
+
+  .site-header--flow {
+    position: relative;
+    border-bottom: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-page) 88%, transparent);
   }
 
   .site-header__inner {

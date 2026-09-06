@@ -1,4 +1,5 @@
 ---
+import SiteHeader from "../components/SiteHeader.astro";
 import Button from "../components/ui/Button.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
@@ -22,17 +23,10 @@ const tones = ["ink", "blue", "pink", "orange", "teal", "purple"] as const;
   title="UI Foundations | Merge Digital Solutions"
   description="Typography, color, controls, and reusable interface foundations for Merge Digital Solutions."
 >
-  <header class="guide-header">
-    <div class="site-container guide-header__inner">
-      <a class="brand" href="/" aria-label="Merge Digital Solutions home">
-        <img src="/merge-logo-main.png" alt="" width="2172" height="724" />
-      </a>
-      <Button href="/" variant="tertiary">Back home</Button>
-    </div>
-  </header>
+  <SiteHeader ctaHref="/" ctaLabel="Back to Home" overlay={false} />
 
   <main class="site-container guide">
-    <section class="guide-intro">
+    <section class="guide-intro" data-section-reveal>
       <p class="type-label eyebrow">Design system starter</p>
       <h1 class="type-heading-1">UI foundations</h1>
       <p class="type-body-lg guide-intro__copy">
@@ -42,7 +36,11 @@ const tones = ["ink", "blue", "pink", "orange", "teal", "purple"] as const;
       </p>
     </section>
 
-    <section class="guide-section" aria-labelledby="typography-title">
+    <section
+      class="guide-section"
+      aria-labelledby="typography-title"
+      data-section-reveal
+    >
       <div class="section-heading">
         <p class="type-label eyebrow">01 / Typography</p>
         <h2 id="typography-title" class="type-heading-2">Plus Jakarta Sans</h2>
@@ -74,7 +72,11 @@ const tones = ["ink", "blue", "pink", "orange", "teal", "purple"] as const;
       </div>
     </section>
 
-    <section class="guide-section" aria-labelledby="colors-title">
+    <section
+      class="guide-section"
+      aria-labelledby="colors-title"
+      data-section-reveal
+    >
       <div class="section-heading">
         <p class="type-label eyebrow">02 / Color</p>
         <h2 id="colors-title" class="type-heading-2">Core palette</h2>
@@ -98,7 +100,11 @@ const tones = ["ink", "blue", "pink", "orange", "teal", "purple"] as const;
       </div>
     </section>
 
-    <section class="guide-section" aria-labelledby="buttons-title">
+    <section
+      class="guide-section"
+      aria-labelledby="buttons-title"
+      data-section-reveal
+    >
       <div class="section-heading">
         <p class="type-label eyebrow">03 / Actions</p>
         <h2 id="buttons-title" class="type-heading-2">Button hierarchy</h2>
@@ -130,7 +136,11 @@ const tones = ["ink", "blue", "pink", "orange", "teal", "purple"] as const;
       </div>
     </section>
 
-    <section class="guide-section" aria-labelledby="forms-title">
+    <section
+      class="guide-section"
+      aria-labelledby="forms-title"
+      data-section-reveal
+    >
       <div class="section-heading">
         <p class="type-label eyebrow">04 / Forms</p>
         <h2 id="forms-title" class="type-heading-2">Input fields</h2>
@@ -158,23 +168,6 @@ const tones = ["ink", "blue", "pink", "orange", "teal", "purple"] as const;
 </BaseLayout>
 
 <style>
-  .guide-header {
-    border-bottom: 1px solid var(--color-border);
-    background: color-mix(in srgb, var(--color-page) 88%, transparent);
-  }
-
-  .guide-header__inner {
-    display: flex;
-    min-height: 6rem;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .brand {
-    width: clamp(8rem, 18vw, 11rem);
-  }
-
   .guide {
     padding-bottom: var(--section-space);
   }
