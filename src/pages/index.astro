@@ -1,5 +1,6 @@
 ---
 import Button from "../components/ui/Button.astro";
+import SiteHeader from "../components/SiteHeader.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
@@ -7,12 +8,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   title="Merge Digital Solutions"
   description="We design digital experiences that move your business forward."
 >
-  <header class="site-container site-header">
-    <a class="brand" href="/" aria-label="Merge Digital Solutions home">
-      <img src="/merge-logo-main.png" alt="" width="2172" height="724" />
-    </a>
-    <Button href="/style-guide" variant="secondary">UI foundations</Button>
-  </header>
+  <SiteHeader />
 
   <main>
     <section class="site-container hero">
@@ -62,18 +58,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 </BaseLayout>
 
 <style>
-  .site-header {
-    display: flex;
-    min-height: 6rem;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .brand {
-    width: clamp(8rem, 18vw, 11rem);
-  }
-
   .hero {
     display: grid;
     min-height: calc(100vh - 12rem);
