@@ -1,0 +1,100 @@
+---
+import Button from "../components/ui/Button.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Page not found | Merge Digital Solutions"
+  description="The page you were looking for could not be found."
+>
+  <a class="skip-link" href="#not-found-content">Skip to content</a>
+
+  <header class="guide-header">
+    <div class="site-container guide-header__inner">
+      <a class="brand" href="/" aria-label="Merge Digital Solutions home">
+        <img src="/merge-logo-main.png" alt="" width="176" height="59" />
+      </a>
+      <Button href="/" variant="tertiary">Back home</Button>
+    </div>
+  </header>
+
+  <main id="not-found-content" class="not-found-page">
+    <h1 class="sr-only">Page not found</h1>
+    <img
+      class="not-found-gif"
+      src="/assets/404-gif-display.gif"
+      alt="404 page not found animation"
+    />
+    <p>alaws pa content HAHAHA</p>
+  </main>
+</BaseLayout>
+
+<style>
+  .skip-link {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 2;
+    padding: 0.65rem 1rem;
+    border-radius: var(--radius-control);
+    background: var(--color-ink);
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  .guide-header {
+    border-bottom: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-page) 88%, transparent);
+  }
+
+  .guide-header__inner {
+    display: flex;
+    min-height: 6rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .brand {
+    width: clamp(8rem, 18vw, 11rem);
+  }
+
+  .brand img {
+    width: 100%;
+    height: auto;
+  }
+
+  .not-found-page {
+    display: grid;
+    min-height: calc(100svh - 6rem);
+    place-content: center;
+    justify-items: center;
+    padding: 2rem 1rem 3rem;
+    text-align: center;
+  }
+
+  .not-found-gif {
+    width: min(calc(100vw - 2rem), calc(100svh - 20rem), 46rem);
+    max-height: calc(100svh - 20rem);
+    object-fit: contain;
+  }
+
+  p {
+    margin: 1.25rem 0 0;
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+  }
+
+  @media (min-width: 48rem) {
+    .not-found-page {
+      padding-inline: 2rem;
+    }
+  }
+</style>

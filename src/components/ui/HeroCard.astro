@@ -1,0 +1,100 @@
+---
+type Placement = "primary" | "top" | "bottom";
+
+interface Props {
+  src: string;
+  width: number;
+  height: number;
+  placement: Placement;
+}
+
+const { src, width, height, placement } = Astro.props;
+
+const placementClasses: Record<Placement, string> = {
+  primary: "top-[1.8125rem] left-[0.75%] w-[51%] aspect-[0.69]",
+  top: "top-0 left-[56.3%] w-[28.5%] aspect-[0.76]",
+  bottom: "top-[41.5%] right-[1%] w-[30.75%] aspect-[0.7]",
+};
+---
+
+<div
+  class:list={[
+    "hero-card absolute overflow-hidden rounded-[clamp(0.5rem,1vw,0.75rem)] bg-(--color-surface)",
+    placementClasses[placement],
+  ]}
+  data-hero-card={placement}
+>
+  <img
+    class="h-full w-full object-cover"
+    src={src}
+    alt=""
+    width={width}
+    height={height}
+    loading="eager"
+  />
+</div>
+
+<style>
+  .hero-card {
+    --card-x: 0px;
+    --card-y: 0px;
+    --card-rotation: 0deg;
+    --ripple-x: 50%;
+    --ripple-y: 50%;
+
+    transform: translate3d(var(--card-x), var(--card-y), 0)
+      rotate(var(--card-rotation));
+    transform-origin: center;
+    will-change: transform;
+  }
+
+  .hero-card::after {
+    position: absolute;
+    width: 5rem;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background: repeating-radial-gradient(
+      circle,
+      transparent 0 0.45rem,
+      rgb(255 255 255 / 22%) 0.5rem 0.58rem,
+      transparent 0.64rem 0.95rem
+    );
+    content: "";
+    left: var(--ripple-x);
+    opacity: 0;
+    pointer-events: none;
+    top: var(--ripple-y);
+    transform: translate(-50%, -50%) scale(0.55);
+  }
+
+  .hero-card:hover::after {
+    animation: hero-card-ripple 1.8s ease-out infinite;
+  }
+
+  @keyframes hero-card-ripple {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.02);
+    }
+
+    22% {
+      opacity: 0.8;
+    }
+
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1.15);
+    }
+  }
+
+  @media (pointer: coarse), (prefers-reduced-motion: reduce) {
+    .hero-card {
+      transform: none;
+      will-change: auto;
+    }
+
+    .hero-card::after {
+      display: none;
+    }
+  }
+</style>
