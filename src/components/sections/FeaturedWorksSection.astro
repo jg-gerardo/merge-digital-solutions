@@ -1,0 +1,204 @@
+---
+import Button from "../ui/Button.astro";
+
+const featuredWorks = ["top", "middle", "bottom"] as const;
+---
+
+<section
+  class="featured-works"
+  id="featured-works"
+  aria-labelledby="featured-works-title"
+>
+  <div class="site-container" data-section-reveal>
+    <div class="featured-works__heading">
+      <h2 id="featured-works-title">Featured works</h2>
+      <Button
+        class="featured-works__link"
+        href="/works"
+        variant="tertiary"
+        tone="blue"
+      >
+        VIEW ALL WORKS
+      </Button>
+    </div>
+
+    <div class="featured-works__grid">
+      {
+        featuredWorks.map((work, index) => (
+          <a
+            class="featured-work"
+            href="/works"
+            aria-label={`View featured work ${index + 1}`}
+            data-featured-work
+            data-work={work}
+          >
+            <img
+              class="featured-work__art"
+              src="/assets/images/card-design-4.png"
+              alt=""
+              width="1080"
+              height="1920"
+              loading="lazy"
+            />
+            <span class="featured-work__content">
+              <span class="featured-work__copy">
+                <h3>Project Title</h3>
+                <p>Project Description</p>
+              </span>
+              <span class="featured-work__arrow" aria-hidden="true">
+                &gt;
+              </span>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .featured-works {
+    position: relative;
+    z-index: 1;
+    padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  .featured-works__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .featured-works h2 {
+    color: var(--color-brand-blue-strong);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .featured-works h2 {
+    margin: 0;
+  }
+
+  :global(.featured-works__link.button) {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .featured-works__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 3vw, 2.25rem);
+    margin-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .featured-work {
+    position: relative;
+    min-height: clamp(10rem, 18vw, 13rem);
+    overflow: hidden;
+    border-radius: 0.75rem;
+    background: #a8aaa2;
+    color: white;
+    text-decoration: none;
+    transition:
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .featured-work:hover {
+    box-shadow: 0 1rem 2rem rgb(32 35 46 / 14%);
+    transform: translateY(-0.25rem);
+  }
+
+  .featured-work__art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: 50% 28%;
+    filter: saturate(0.82);
+    transform: scale(1.02);
+    transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .featured-work[data-work="middle"] .featured-work__art {
+    object-position: 50% 50%;
+  }
+
+  .featured-work[data-work="bottom"] .featured-work__art {
+    object-position: 50% 72%;
+  }
+
+  .featured-work:hover .featured-work__art {
+    transform: scale(1.06);
+  }
+
+  .featured-work::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgb(17 19 24 / 42%), transparent 68%);
+    content: "";
+  }
+
+  .featured-work__content {
+    position: absolute;
+    z-index: 1;
+    right: 0.8rem;
+    bottom: 0.8rem;
+    left: 0.8rem;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .featured-work__copy {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .featured-work h3 {
+    margin: 0;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .featured-work p {
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .featured-work__arrow {
+    display: grid;
+    width: 2rem;
+    flex: 0 0 2rem;
+    aspect-ratio: 1;
+    place-items: center;
+    border-radius: 0.6rem;
+    background: white;
+    color: #111318;
+    font-size: 0.75rem;
+    font-weight: 700;
+    transition: transform 160ms ease;
+  }
+
+  .featured-work:hover .featured-work__arrow {
+    transform: translateX(0.15rem);
+  }
+
+  @media (max-width: 48rem) {
+    .featured-works__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .featured-work {
+      min-height: clamp(10rem, 52vw, 14rem);
+    }
+  }
+</style>
