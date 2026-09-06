@@ -1,0 +1,230 @@
+---
+import Button from "../ui/Button.astro";
+
+const services = [
+  {
+    title: "Brand strategy",
+    description:
+      "Clear positioning and visual direction that give your business a distinct, memorable presence.",
+    color: "teal",
+  },
+  {
+    title: "Web design",
+    description:
+      "Thoughtful, user-focused interfaces that make every interaction feel simple and intentional.",
+    color: "orange",
+  },
+  {
+    title: "Development",
+    description:
+      "Fast, reliable websites and applications built to perform smoothly on every screen.",
+    color: "pink",
+  },
+  {
+    title: "Digital growth",
+    description:
+      "Practical digital solutions that help your brand reach more people and keep moving forward.",
+    color: "purple",
+  },
+] as const;
+---
+
+<section
+  class="services-section"
+  id="services"
+  aria-labelledby="services-title"
+>
+  <div class="site-container" data-section-reveal>
+    <div class="services-section__heading">
+      <div>
+        <p class="services-section__eyebrow">What we do</p>
+        <h2 id="services-title">
+          End-to-end solutions<br />for your digital needs.
+        </h2>
+      </div>
+
+      <Button
+        class="services-section__link"
+        href="/services"
+        variant="tertiary"
+        tone="blue"
+      >
+        View all services
+      </Button>
+    </div>
+
+    <div class="services-section__grid">
+      {
+        services.map(({ title, description, color }) => (
+          <a
+            class="service-card"
+            href="/services"
+            aria-label={`Explore ${title}`}
+            data-service-card
+          >
+            <span
+              class="service-card__art"
+              data-color={color}
+              aria-hidden="true"
+            />
+            <h3>{title}</h3>
+            <p>{description}</p>
+            <svg
+              class="service-card__arrow"
+              viewBox="0 0 16 16"
+              width="16"
+              height="16"
+              aria-hidden="true"
+            >
+              <path
+                d="m6 3 5 5-5 5"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.75"
+              />
+            </svg>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-section {
+    padding-block: clamp(3rem, 5vw, 4.5rem);
+    background: var(--color-surface-subtle);
+  }
+
+  .services-section__heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .services-section__eyebrow {
+    margin: 0 0 1.35rem;
+    color: var(--color-brand-blue-strong);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .services-section h2 {
+    margin: 0;
+    color: #111318;
+    font-size: clamp(1.5rem, 2.5vw, 1.75rem);
+    font-weight: 400;
+    line-height: 1.16;
+    letter-spacing: -0.035em;
+  }
+
+  :global(.services-section__link.button) {
+    margin-top: 0.1rem;
+    font-size: 0.75rem;
+  }
+
+  .services-section__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    margin-top: clamp(2rem, 4vw, 3rem);
+    padding-inline: clamp(0rem, 2vw, 1.5rem);
+  }
+
+  .service-card {
+    display: flex;
+    min-height: 13rem;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    background: var(--color-surface);
+    color: #111318;
+    text-decoration: none;
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .service-card:hover {
+    box-shadow: 0 1rem 2rem rgb(32 35 46 / 8%);
+    transform: translateY(-0.25rem);
+  }
+
+  .service-card__art {
+    width: 4.75rem;
+    aspect-ratio: 1;
+    margin-bottom: 1rem;
+    border-radius: 0.7rem;
+    background: var(--service-color);
+  }
+
+  .service-card__art[data-color="teal"] {
+    --service-color: var(--color-brand-teal);
+  }
+
+  .service-card__art[data-color="orange"] {
+    --service-color: var(--color-brand-orange);
+  }
+
+  .service-card__art[data-color="pink"] {
+    --service-color: var(--color-brand-pink);
+  }
+
+  .service-card__art[data-color="purple"] {
+    --service-color: var(--color-brand-purple);
+  }
+
+  .service-card h3 {
+    margin: 0 0 0.55rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .service-card p {
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.35;
+  }
+
+  .service-card__arrow {
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-top: auto;
+    transition: transform 160ms ease;
+  }
+
+  .service-card:hover .service-card__arrow {
+    transform: translateX(0.2rem);
+  }
+
+  @media (max-width: 55rem) {
+    .services-section__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .services-section__heading {
+      display: block;
+    }
+
+    :global(.services-section__link.button) {
+      margin-top: 1.25rem;
+    }
+
+    .services-section__grid {
+      grid-template-columns: 1fr;
+      padding-inline: 0;
+    }
+
+    .service-card {
+      min-height: 13rem;
+    }
+  }
+</style>

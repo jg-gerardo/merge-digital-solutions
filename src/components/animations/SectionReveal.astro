@@ -1,0 +1,57 @@
+<script is:inline>
+  document.documentElement.setAttribute("data-reveal-ready", "");
+</script>
+
+<script>
+  const revealTargets = document.querySelectorAll<HTMLElement>(
+    "[data-section-reveal]",
+  );
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  if (reducedMotion.matches || !("IntersectionObserver" in window)) {
+    revealTargets.forEach((target) =>
+      target.setAttribute("data-reveal-visible", ""),
+    );
+  } else {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.toggleAttribute(
+            "data-reveal-visible",
+            entry.isIntersecting,
+          );
+        });
+      },
+      {
+        rootMargin: "-12% 0px -12% 0px",
+        threshold: 0,
+      },
+    );
+
+    revealTargets.forEach((target) => observer.observe(target));
+  }
+</script>
+
+<style is:global>
+  html[data-reveal-ready] [data-section-reveal] {
+    opacity: 0;
+    filter: blur(0.4rem);
+    transition:
+      opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, filter;
+  }
+
+  html[data-reveal-ready] [data-section-reveal][data-reveal-visible] {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html[data-reveal-ready] [data-section-reveal] {
+      opacity: 1;
+      filter: none;
+      will-change: auto;
+    }
+  }
+</style>
