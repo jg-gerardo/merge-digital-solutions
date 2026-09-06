@@ -15,4 +15,11 @@ test("shows the reusable UI foundation", async ({ page }) => {
   );
   await expect(page.getByLabel("Name")).toBeVisible();
   await expect(page.getByLabel("Email")).toHaveValue("hello@example.com");
+
+  const revealSections = page.locator("[data-section-reveal]");
+  await expect(revealSections).toHaveCount(5);
+  await expect(revealSections.first()).toHaveAttribute(
+    "data-reveal-visible",
+    "",
+  );
 });
