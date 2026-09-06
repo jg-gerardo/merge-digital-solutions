@@ -281,6 +281,7 @@ test("shows the primary navigation", async ({ page }) => {
     navigation.getByRole("link", { name: "Contact" }),
   ).toHaveAttribute("href", "/contact");
   const contactLink = page.getByRole("link", { name: "Let's Talk" });
+  await expect(page.locator(".site-header__cta")).toHaveCount(1);
   await expect(contactLink).toHaveAttribute("href", "/contact");
   await expect(contactLink).toHaveAttribute("data-variant", "secondary");
 });
@@ -313,8 +314,10 @@ test("opens and closes the navigation on a narrow screen", async ({ page }) => {
   const sheetContactLink = navigation.getByRole("link", {
     name: "Let's Talk",
   });
-  await expect(sheetContactLink).toBeVisible();
-  await expect(sheetContactLink).toHaveAttribute("data-variant", "secondary");
+  await expect(sheetContactLink).toHaveCount(0);
+  const mobileContactLink = page.getByRole("link", { name: "Let's Talk" });
+  await expect(mobileContactLink).toBeVisible();
+  await expect(mobileContactLink).toHaveAttribute("data-variant", "secondary");
 
   await page.keyboard.press("Escape");
   await expect(toggle).toHaveAttribute("aria-expanded", "false");

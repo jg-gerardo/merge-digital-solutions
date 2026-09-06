@@ -48,13 +48,6 @@ const currentPath = Astro.url.pathname;
         }
       </div>
 
-      <Button
-        class="site-header__mobile-cta"
-        href="/contact"
-        variant="secondary"
-      >
-        Let&apos;s Talk
-      </Button>
     </nav>
 
     <div class="site-header__actions">
@@ -177,7 +170,6 @@ const currentPath = Astro.url.pathname;
   }
 
   .site-header__mobile-brand,
-  :global(.site-header__mobile-cta.button),
   .site-header__backdrop {
     display: none;
   }
@@ -359,13 +351,6 @@ const currentPath = Astro.url.pathname;
       display: none;
     }
 
-    :global(.site-header__mobile-cta.button) {
-      display: inline-flex;
-      width: 100%;
-      margin-top: auto;
-      border-radius: 0.625rem;
-    }
-
     .site-header__backdrop {
       position: fixed;
       z-index: 1;
@@ -394,6 +379,18 @@ const currentPath = Astro.url.pathname;
 
     :global(.site-header__cta.button) {
       display: none;
+    }
+
+    .site-header[data-navigation-open] :global(.site-header__cta.button) {
+      position: fixed;
+      z-index: 3;
+      right: auto;
+      bottom: 1rem;
+      left: 1rem;
+      display: inline-flex;
+      width: calc(75vw - 2rem);
+      border-radius: 0.625rem;
+      background: var(--color-surface);
     }
 
     .site-header__toggle {
