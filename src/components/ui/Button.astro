@@ -1,0 +1,198 @@
+---
+type Variant = "primary" | "secondary" | "tertiary" | "icon";
+type Tone = "ink" | "blue" | "pink" | "orange" | "teal" | "purple";
+
+interface Props {
+  variant?: Variant;
+  tone?: Tone;
+  href?: string;
+  type?: "button" | "submit" | "reset";
+  ariaLabel?: string;
+  class?: string;
+  disabled?: boolean;
+}
+
+const {
+  variant = "primary",
+  tone = "ink",
+  href,
+  type = "button",
+  ariaLabel,
+  class: className,
+  disabled = false,
+} = Astro.props;
+
+if (variant === "icon" && !ariaLabel) {
+  throw new Error("Icon buttons require an ariaLabel.");
+}
+
+const Element = href ? "a" : "button";
+const showIcon = variant === "tertiary" || variant === "icon";
+---
+
+<Element
+  class:list={["button", className]}
+  data-variant={variant}
+  data-tone={tone}
+  href={href}
+  type={href ? undefined : type}
+  aria-label={variant === "icon" ? ariaLabel : undefined}
+  disabled={href ? undefined : disabled}
+  aria-disabled={href && disabled ? "true" : undefined}
+  tabindex={href && disabled ? -1 : undefined}
+>
+  {
+    variant !== "icon" && (
+      <span>
+        <slot />
+      </span>
+    )
+  }
+  {
+    showIcon && (
+      <svg
+        class="button__icon"
+        viewBox="0 0 16 16"
+        width="16"
+        height="16"
+        aria-hidden="true"
+      >
+        <path
+          d="m6 3 5 5-5 5"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.75"
+        />
+      </svg>
+    )
+  }
+</Element>
+
+<style>
+  .button {
+    --button-color: var(--color-ink);
+    --button-strong: var(--color-ink);
+    --button-contrast: white;
+
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.25rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-pill);
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      color 160ms ease,
+      background-color 160ms ease,
+      border-color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .button[data-tone="blue"] {
+    --button-color: var(--color-brand-blue);
+    --button-strong: var(--color-brand-blue-strong);
+  }
+
+  .button[data-tone="pink"] {
+    --button-color: var(--color-brand-pink);
+    --button-strong: var(--color-brand-pink-strong);
+    --button-contrast: var(--color-ink);
+  }
+
+  .button[data-tone="orange"] {
+    --button-color: var(--color-brand-orange);
+    --button-strong: var(--color-brand-orange-strong);
+    --button-contrast: var(--color-ink);
+  }
+
+  .button[data-tone="teal"] {
+    --button-color: var(--color-brand-teal);
+    --button-strong: var(--color-brand-teal-strong);
+    --button-contrast: var(--color-ink);
+  }
+
+  .button[data-tone="purple"] {
+    --button-color: var(--color-brand-purple);
+    --button-strong: var(--color-brand-purple-strong);
+  }
+
+  .button[data-variant="primary"] {
+    border-color: var(--button-color);
+    background: var(--button-color);
+    color: var(--button-contrast);
+  }
+
+  .button[data-variant="secondary"] {
+    border-color: color-mix(in srgb, var(--button-strong) 72%, white);
+    background: transparent;
+    color: var(--button-strong);
+  }
+
+  .button[data-variant="tertiary"] {
+    min-height: auto;
+    padding: 0.4rem 0;
+    border-radius: 0;
+    color: var(--button-strong);
+  }
+
+  .button[data-variant="icon"] {
+    width: 2.75rem;
+    padding: 0;
+    border-radius: var(--radius-control);
+    background: var(--button-color);
+    color: var(--button-contrast);
+  }
+
+  .button:hover:not(:disabled, [aria-disabled="true"]) {
+    transform: translateY(-1px);
+  }
+
+  .button[data-variant="primary"]:hover:not(:disabled, [aria-disabled="true"]),
+  .button[data-variant="icon"]:hover:not(:disabled, [aria-disabled="true"]) {
+    background: color-mix(in srgb, var(--button-color) 86%, black);
+    border-color: color-mix(in srgb, var(--button-color) 86%, black);
+  }
+
+  .button[data-variant="secondary"]:hover:not(
+      :disabled,
+      [aria-disabled="true"]
+    ) {
+    background: color-mix(in srgb, var(--button-color) 10%, white);
+    border-color: var(--button-strong);
+  }
+
+  .button[data-variant="tertiary"]:hover:not(
+      :disabled,
+      [aria-disabled="true"]
+    ) {
+    transform: none;
+    color: color-mix(in srgb, var(--button-strong) 82%, black);
+  }
+
+  .button__icon {
+    flex: 0 0 auto;
+    transition: transform 160ms ease;
+  }
+
+  .button:hover:not(:disabled, [aria-disabled="true"]) .button__icon {
+    transform: translateX(2px);
+  }
+
+  .button:disabled,
+  .button[aria-disabled="true"] {
+    opacity: 0.48;
+    cursor: not-allowed;
+  }
+
+  .button[aria-disabled="true"] {
+    pointer-events: none;
+  }
+</style>

@@ -6,9 +6,11 @@ the website grows.
 
 ## Documentation index
 
-| Document                                | Purpose                                                        |
-| --------------------------------------- | -------------------------------------------------------------- |
-| [Project setup guide](project-setup.md) | How the initial stack was installed, configured, and organized |
+| Document                                    | Purpose                                                        |
+| ------------------------------------------- | -------------------------------------------------------------- |
+| [General design context](design-context.md) | Visual direction, UI language, and moodboard-derived guidance  |
+| [Project setup guide](project-setup.md)     | How the initial stack was installed, configured, and organized |
+| [UI foundation](ui-foundation.md)           | Theme tokens, typography classes, and reusable controls        |
 
 Add entries to this index when documenting topics such as:
 

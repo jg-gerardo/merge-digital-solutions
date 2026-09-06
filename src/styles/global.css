@@ -1,5 +1,227 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans:
+    "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --color-ink: #20232e;
+  --color-neutral-muted: #7b7d84;
+  --color-neutral-soft: #eeeeee;
+  --color-neutral-cool: #dedede;
+  --color-canvas: #f4f4f4;
+  --color-brand-blue: #0868b2;
+  --color-brand-pink: #ff3b82;
+  --color-brand-orange: #ff7900;
+  --color-brand-teal: #00ad98;
+  --color-brand-purple: #9700b8;
+  --color-brand-blue-strong: #07558f;
+  --color-brand-pink-strong: #b51751;
+  --color-brand-orange-strong: #a54b00;
+  --color-brand-teal-strong: #00796d;
+  --color-brand-purple-strong: #74008e;
+
+  --radius-control: 0.625rem;
+  --radius-card: 1.25rem;
+  --radius-pill: 9999px;
+}
+
+:root {
+  color-scheme: light;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-canvas);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+
+  --color-page: var(--color-canvas);
+  --color-surface: #ffffff;
+  --color-surface-subtle: var(--color-neutral-soft);
+  --color-text: var(--color-ink);
+  --color-text-muted: #62656d;
+  --color-border: #d2d3d6;
+  --color-focus: var(--color-brand-blue);
+  --content-width: 75rem;
+  --section-space: clamp(4rem, 8vw, 7.5rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 20rem;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--color-page);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--color-brand-blue);
+  color: white;
+}
+
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-focus) 70%, white);
+  outline-offset: 3px;
+}
+
+.site-container {
+  width: min(calc(100% - 2rem), var(--content-width));
+  margin-inline: auto;
+}
+
+.type-display,
+.type-heading-1,
+.type-heading-2,
+.type-heading-3 {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.type-display {
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+}
+
+.type-heading-1 {
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.type-heading-2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.type-heading-3 {
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.type-body-lg {
+  font-size: clamp(1.0625rem, 2vw, 1.25rem);
+  line-height: 1.65;
+}
+
+.type-body {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.type-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.field-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.text-input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--color-text);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.text-input::placeholder {
+  color: var(--color-neutral-muted);
+}
+
+.text-input:hover {
+  border-color: var(--color-neutral-muted);
+}
+
+.text-input:focus {
+  border-color: var(--color-focus);
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-focus) 20%, transparent);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (min-width: 48rem) {
+  .site-container {
+    width: min(calc(100% - 4rem), var(--content-width));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 :root {
   font-family:
     Inter,
